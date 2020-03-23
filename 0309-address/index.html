@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/index.css" >
+</head>
+<body>
+	<form>
+		<input name="area" data-cb-text="姓名" data-cb-url="http://localhost:8080/cascadeTest/area/loadAreasByParentCode.do">
+	</form>
+	<!-- <div class="cascade-box">
+		<span class="addon">范围</span>
+		<input class="text" readonly="" placeholder="请选择范围">
+		<input type="hidden" name="area" value="220105">
+		<div class="selector" style="display: none;">
+			<dl class="province">
+				<dt>选择省</dt>
+				<dd><ul class="letter-group"><li><a href="javascript:void(0);">A</a></li></ul><ul class="data-group"><li class="group A">A</li><li class="A" data-code="340000"><a href="javascript:void(0);">安徽</a></li></ul></dd>
+			</dl>
+			<dl class="city">
+				<dt>选择市</dt>
+				<dd><ul class="letter-group"><li><a href="javascript:void(0);">B</a></li></ul><ul class="data-group"><li class="group B">B</li><li class="B" data-code="220800"><a href="javascript:void(0);">白城</a></li></ul></dd>
+			</dl>
+			<dl class="area">
+				<dt>选择区</dt>
+				<dd><ul class="letter-group"><li><a href="javascript:void(0);">C</a></li></ul><ul class="data-group"><li class="group C">C</li><li class="C" data-code="220104"><a href="javascript:void(0);">朝阳</a></li></ul></dd>
+			</dl>
+		</div>
+	</div> -->
+	<script src="assets/js/jquery-2.2.4.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-combobox-1.0.1/jquery-combobox.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("input[name=area]").combobox({
+				data : [
+						{name:"province",text:"选择省"},
+						{name:"city",text:"选择市"},
+						{name:"area",text:"选择区"}
+					  ]
+			});
+		});
+	</script>
+</body>
+</html>

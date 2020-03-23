@@ -1,0 +1,92 @@
+<div id="mydiv"></div>
+<script type="text/javascript">
+	function fun(){
+		return undefined;
+	}
+	fun();//普通函数调用注重返回结果
+	function MyFun(){//构造器
+		new Object();
+	}
+	MyFun.prototype.add = function(){
+		alert(1);
+	}
+	//MyFun这个构造器创建出来的实例
+	var myfun = new MyFun();//new构造器函数调用注重的是新创建的这个对象的内存地址
+	// console.log(myfun.__proto__);//它是属于实例的
+	// console.log(MyFun.prototype);//它是属于构造器的
+	// console.log(myfun.__proto__ === MyFun.prototype);
+	// console.log(1=="1");//true
+	// console.log(1==="1");//true
+	// console.log(myfun.constructor);//它是实例的产生地 MyFun
+
+	function Human(){//构造器函数一般都是名词
+
+	}
+	Human.prototype = {
+		constructor : Human,
+		absorb : function(){//功能函数一般都是动词
+			console.log("absorb")
+		},
+		excrete : function(){
+			console.log("excrete")
+		},
+		say : function(){
+			console.log("!@(*#&(!*@#&");
+		}
+	};
+
+	function Chinese(){
+
+	}
+	Chinese.prototype = new Human();
+
+
+	Chinese.prototype = Object.setPrototypeOf({
+		constructor : Chinese,
+		say : function say(a){
+			console.log("中文：你好！")
+			console.log(this.say===say);//内存地址
+		},
+		eat : function(){
+
+		}
+	},Human.prototype);
+	var c = new Chinese();
+	//__proto__不是我们创建的，也不允许我们操作，它是实现JS底层原型链机制的链条
+	// var c = new Chinese();
+	// c.say();
+	var __toString__ = Object.prototype.toString;
+	// console.log(__toString__);
+	Object.prototype.toString = function toString(){
+		console.log("before toString...")
+		var _res_ = __toString__.call(this);
+		console.log("after toString...")
+		return _res_;
+	}
+	// var obj = new Object();
+	// console.log(mydiv.constructor);
+	// console.log(obj.hasOwnProperty());//
+	// console.log({}.toString())
+	// console.log("abc".toString());
+	// toString: ƒ toString()
+	// valueOf: ƒ valueOf()
+
+	// console.log(new Object().hasOwnProperty);//
+	// console.log(Object.defineProperty);//工具函数 静态函数
+	// console.log({})
+	var obj = {
+		// name : "edison"
+	};
+	console.log(new Chinese())
+	Object.defineProperty(obj,"name",{
+		value : "edison",
+		enumerable : true,//该属性可以被枚举（迭代器迭代）
+		configurable : true,//该属性可以被再次定义（defineProperty）
+		writable : true//该属性可以写
+	});
+	for(var prop in obj){
+		console.log(prop);
+	}
+
+	
+</script>

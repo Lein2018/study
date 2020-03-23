@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基数排序</title>
+    <script  src="js/LinkedList-0.1.js"></script>
+</head>
+<body>
+    <script>
+        var list = new LinkedList();
+        //万 1  条 2  筒 3
+        list.addLast({suit: 1, rank: 2});
+        list.addLast({suit: 1, rank: 2});
+        list.addLast({suit: 1, rank: 5});
+        list.addLast({suit: 1, rank: 5});
+        list.addLast({suit: 2, rank: 8});
+        list.addLast({suit: 1, rank: 8});
+        list.addLast({suit: 2, rank: 1});
+        list.addLast({suit: 2, rank: 5});
+        list.addLast({suit: 3, rank: 2});
+        list.addLast({suit: 1, rank: 9});
+        list.addLast({suit: 2, rank: 5});
+        list.addLast({suit: 3, rank: 1});
+        list.addLast({suit: 3, rank: 3});
+
+        function radixSort(arg){
+            //1 按点数分配   准备9个链表 放在一个数组里面
+            var rank_Sort = [];//放什么 放链表 
+            for(var i = 0; i < 9; i++){
+                rank_Sort.push(new LinkedList());
+            }
+            //2 往9个新链表里面 填充数据
+            //console.log( arg.size());
+            for(var i = 0; i < arg.size(); i++){
+                var m = arg.get(i);
+                rank_Sort[m.rank - 1].addLast(m);
+            }
+
+            // 3 把9个链表里面的数据从新收集 放一个新的容器
+            var list_rank = new LinkedList();
+            for(var i = 0; i < rank_Sort.length; i++){
+                for(var j = 0; j < rank_Sort[i].size(); j++){
+                    //rank_Sort[i] 从数组取出一个链表 
+                    //get(j) 从链表取出第几个数据
+                    list_rank.addLast(rank_Sort[i].get(j));
+                }
+            }
+
+           // console.log(list_rank.toString());
+
+           var suit_Sort = [];//放什么 放链表 
+            for(var i = 0; i < 3; i++){
+                suit_Sort.push(new LinkedList());
+            }
+
+            for(var i = 0; i < list_rank.size(); i++){
+                var m = list_rank.get(i);
+                suit_Sort[m.suit - 1].addLast(m);
+            }
+            
+            var list_suit = new LinkedList();
+            for(var i = 0; i < suit_Sort.length; i++){
+                for(var j = 0; j < suit_Sort[i].size(); j++){
+                    //rank_Sort[i] 从数组取出一个链表 
+                    //get(j) 从链表取出第几个数据
+                    list_suit.addLast(suit_Sort[i].get(j));
+                }
+            }
+
+            console.log(list_suit.toString());
+            
+        }
+        radixSort(list);
+        //console.log(list.toString());
+
+    </script>
+</body>
+</html>

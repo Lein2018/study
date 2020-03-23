@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise  讲解</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    let sleep = function () {
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+                resolve("我要睡觉了");
+            },1000)
+        })
+    }
+    sleep().then(function (data) {
+        console.log(data);
+    })
+</script>
+</html>

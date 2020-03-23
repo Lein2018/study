@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<body>
+		<div id="app"></div>
+		<script src="vue2.5.1.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#app',
+				template: '<div>{{ test }}</div>',
+				data: {
+					test: 1
+				}
+			});
+			console.log(vm.$options.render);   //渲染函数
+		</script>
+	</body>
+</html>

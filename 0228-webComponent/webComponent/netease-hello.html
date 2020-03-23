@@ -1,0 +1,27 @@
+<!-- Import X-Tag -->
+<script src="./x-tag-core/src/core.js"></script>
+<template>
+ <p>Hello <strong></strong> :)</p>
+</template>
+<script>
+ (function(window, document, undefined) {
+     var thatDoc = document;
+     var thisDoc = document.currentScript.ownerDocument;
+     var template = thisDoc.querySelector('template').content;
+     xtag.register('netease-hello', {
+         lifecycle: {
+             created: function() {
+                
+             },
+             attributeChanged: function(a , o , n) {
+                this.setHello();
+             }
+         },
+         methods: {
+             setHello: function() {
+                console.log("大家好啊，今晚吃鸡！！！");
+             }
+         }
+     });
+ })(window, document);
+</script>

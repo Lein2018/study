@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS防抖与节流</title>
+	 <style>
+        #container{
+            width: 400px; 
+            height: 200px; 
+            line-height: 200px; 
+            text-align: center; 
+            color: #fff; 
+            background-color: #333; 
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+
+<script type="text/javascript">
+  
+    // var count = 1;
+	// var container = document.getElementById('container');
+	// function getUserAction() {
+    //     //大量的算法 逻辑 异步 回调
+    //     console.log(this);
+
+	//     this.innerHTML = count++;
+    //     //  第一次 发送过去 第二次又发送过  
+    // }
+    // //container.onmousemove =getUserAction;
+    // //container.onmousemove =debounce(getUserAction, 1000, false);
+    // container.onmousemove =throttle(getUserAction, 1000);
+    //防抖
+    // function debounce(func, wait , flag){
+    //     var timeout;
+    //     return function(){
+
+    //         var self = this;
+    //         clearTimeout(timeout);
+    //         if(flag){//开始边界  进去就是做
+    //             var callNow = !timeout ;// 假设页面刷新 第一次进来  timeout为假
+
+    //             timeout = setTimeout(function(){
+    //                 timeout = null;
+    //             }, wait);
+    //             if(callNow){
+    //                 func.apply(self);     
+    //             }
+
+    //         }else{
+    //             timeout = setTimeout(function(){
+    //                 func.apply(self);  
+    //             }, wait);
+    //         }
+    //     }
+    // }
+    //可以控制边界
+    //开始边界 与 结束边界 
+
+    var count = 1;
+	var container = document.getElementById('container');
+	function getUserAction() {
+        //大量的算法 逻辑 异步 回调
+        console.log(this);
+
+	    this.innerHTML = count++;
+        //  第一次 发送过去 第二次又发送过  
+    }
+    //container.onmousemove =getUserAction;
+    //container.onmousemove =debounce(getUserAction, 1000, false);
+    container.onmousemove =throttle(getUserAction, 1000);   
+
+    //节流
+    function throttle(func, wait){
+        var prexious = 0;//用作标记  ==> 相对论
+        return function(){
+            var self = this;
+            var now = +new Date();// +new Date(); 将会调用Date原型上的valueOf方法
+            //console.log(now);
+            //获取1970年1月1号到现在的豪秒数 等同于 Date原型上的getTime()方法
+            if(now - prexious > wait){
+                func.apply(self);
+                prexious = now
+            }
+
+        }
+    }
+    //代码千万行，注释第一行，命名不规范，同事两行泪
+
+    //防止某一时间 频繁触发 
+    // F  某一时间只执行一次  周期内没有再次触发  下次就可以执行
+    //J 间隔时间执行
+    
+
+    var foo = 1
+    var foobar = function() {
+        
+        console.log(foo)
+        var foo = 2
+        
+    }
+    foobar()
+    foobar()
+
+
+
+   
+</script>
+</body>
+</html>

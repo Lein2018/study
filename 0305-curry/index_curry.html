@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>柯里化</title>
+</head>
+<body>
+    <script>
+        // $.ajax(url, type, data); 
+        // $.ajaxGet(url, data);  
+        // $.ajaxGetBaidu(data); 
+        // http https 
+        // http()  https()
+
+        //第一个特点 参数复用 add(1)(2)(3) ==>6 提高性能
+        // function add(a, b, c){
+        //     console.log(a + b + c);
+        // }
+        // add(1,2,3);
+
+        // function add(a){
+        //     //大量的计算 
+        //    return function(b){
+        //        //大量的计算
+        //         return function(c){
+        //             console.log(a + b + c);
+        //         }
+        //    } 
+        // }
+        // const add1 = add(1);
+        // const add2 = add1(2);
+        // add(1)(2)(3);
+        // add2(3);
+        // add2(4);
+        // add2(6);
+
+        // 第二个特点 提前返回  提高性能 
+
+        // var addEvent = function(){
+
+        //     if(window.addEventListener){//对浏览器进行判断 不同的浏览器不同绑定方法
+        //         return function(el, type, fn, captrue){
+        //             el.addEventListener(type, function(e){
+        //                 fn.call(el, e);
+        //              }, captrue);
+        //         }
+        //     }else{
+        //         return function(el, type, fn, captrue){
+        //              el.attachEvent(....);
+        //         }
+        //     }
+
+        // }
+        // var elBind = addEvent();// 判断浏览器 得到一个函数
+
+        // elBind(p, click, callnack ,true);
+        // elBind(div, click, callnack ,true);
+        // elBind(span, click, callnack ,true);
+
+
+        //第三个特点 延迟执行  不定参数
+        // var allScore = 0;
+        // var addScore = function(score){
+        //     //对分数的判断 职业生涯有多个三分  计算里程碑
+        //     allScore += score;
+        // }   
+        // addScore(3);
+        // addScore(2);
+        // addScore(2);
+        // addScore(1);
+        // addScore(1);
+        // addScore(1);
+        // console.log(allScore);
+
+        // var curryScore = function(fn){
+        //     var __allScore = [];
+        //     return function(){
+        //         if(arguments.length === 0){
+        //             return fn.apply(null, __allScore); //  apply 形实转换  对象冒充 执行函数
+        //         }else{
+        //             __allScore = __allScore.concat([].slice.call(arguments));
+        //         } 
+        //         //console.log(__allScore);
+        //     }  
+        // }
+        // var allScore = 0;
+        // var curryAddScore = curryScore(function(){
+        //     //写统计的代码
+        //     for(var i = 0; i < arguments.length; i++){
+        //         allScore += arguments[i];
+        //     }
+        // });
+
+        // // 空间 换 时间  
+
+        // curryAddScore(3);
+        // console.log(allScore);// 3 ==  0
+        // curryAddScore(2);
+        // console.log(allScore);// 5 === 0 
+        // curryAddScore(2);
+        // curryAddScore(1);
+        // curryAddScore(1);
+        // curryAddScore(1);
+        // console.log(allScore);
+        // curryAddScore();
+        // console.log(allScore);
+
+
+        //通用的一个版本 
+        var curry = function(fn){
+            var __args = [];
+            return function cb(){
+                if(arguments.length === 0){
+                    return fn.apply(null, __args); //  apply 形实转换  对象冒充 执行函数
+                }
+                Array.prototype.push.apply(__args, [].slice.call(arguments));
+                return cb;
+            }  
+        }
+
+        function add(a, b, c){
+            console.log(a + b + c);
+        }
+
+        var addCurry = curry(add); //
+
+        addCurry(1)(2)(3)();
+
+        //偏函数 N元  --》  n-1 
+        
+
+
+
+
+
+    </script>
+</body>
+</html>

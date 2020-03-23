@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bind实现</title>
+</head>
+<body>
+    <script>
+        //热身环节 
+        // document.write("冰dong奶茶");
+
+        // var myWrite = document.write;//myWrite ==>window对象
+        // //myWrite("你好！");
+        // myWrite.bind(document)("你好！");
+        // ///------------------------------
+        // setTimeout(function(){
+        //     console.log("几点开始呀");
+        // }, 1000);
+
+        // var myTimeout = setTimeout;
+
+        // myTimeout(function(){
+        //     console.log("8点开始的 ！");
+        // }, 1000);       
+        //问题: 区别在于哪里？
+        // this指向的问题 
+
+        // var foo = {
+        //     value: 1
+        // }
+
+        // function bar(name, sex){
+        //     console.log(name);  
+        //     console.log(sex);  
+        //     console.log(this.value);  
+        // }
+
+        // var bindFoo = bar.bind(foo, "广州吴彦祖");
+        // bindFoo("男");
+
+        // 第一个目标 保存this返回一个函数 
+        // Function.prototype.bind2 = function(context){
+        //     var self = this;
+        //    // console.log(this);
+        //     return function(){
+        //         self.apply(context);
+        //     }
+        // }
+
+        // var bindFoo2 = bar.bind2(foo);
+        // bindFoo2();
+
+        //第二个目标 传入参数 
+        // var foo = {
+        //     value: 1
+        // }
+
+        // function bar(name, sex){
+        //     console.log(name);  
+        //     console.log(sex);  
+        //     console.log(this.value);  
+        // }
+
+        // var bindFoo = bar.bind(foo, "广州吴彦祖");
+
+        // bindFoo("男");
+
+
+        // Function.prototype.bind2 = function(context){
+        //     var self = this;
+        //    // console.log(this);
+        //    var args = Array.prototype.slice.call(arguments, 1); 
+        //     //console.log(args);
+        //     return function(){
+        //         var bindArgs = Array.prototype.slice.call(arguments);
+        //         //console.log(bindArgs);
+        //         self.apply(context, args.concat(bindArgs));
+        //     }
+        // }
+
+        // var bindFoo2 = bar.bind2(foo, "郑文永");
+        // bindFoo2("女");
+
+
+         //化整为零 逐个击破
+
+        //第三个目标 构造函数效果的模拟实现 
+        var foo = {
+            value: 1
+        }
+
+        function bar(name, sex){
+            this.age = "38";
+            console.log(name);  
+            console.log(sex);  
+
+            //console.log(this.value);//this 指向问题   this指向的是obj 实例对象
+        }
+
+        // var bindFoo = bar.bind(foo, "广州吴彦祖");
+        // var obj = new bindFoo("男");
+        // console.log(obj.age);
+        
+        //bindFoo("男");
+
+
+        Function.prototype.bind2 = function(context){
+            var self = this;
+           // console.log(this);// 指向bar函数对象
+           var args = Array.prototype.slice.call(arguments, 1); 
+
+            //console.log(args);
+            //如果里面的this 和 外面的this 是一样的 都是bar对象 ？
+             var fResult = function(){
+                //console.log(this);//空对象 
+            
+                var bindArgs = Array.prototype.slice.call(arguments);
+                //console.log(bindArgs);
+                //context --foo 对象 
+                self.apply(this instanceof self ? this : context, args.concat(bindArgs));
+            }
+            fResult.prototype = self.prototype;
+            return fResult;
+        }
+
+        var bindFoo2 = bar.bind2(foo, "郑文永");
+        var obj2 = new bindFoo2("男");
+        console.log(obj2.age);
+        //bindFoo2("女");
+
+
+    </script>   
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue双向数据绑定实现原理</title>
+</head>
+<script type="text/javascript" src="vue.js"></script>
+<body>
+<div id="app">
+    <input type="text" v-model="count">
+    <p>{{count}}</p>
+</div>
+</body>
+<script type="text/javascript">
+    var v = new Vue({
+        el: "#app",
+        data: {
+            count: 0
+        }
+    });
+    // document.addEventListener("click",function () {
+    //     v.count++;
+    // })
+</script>
+</html>

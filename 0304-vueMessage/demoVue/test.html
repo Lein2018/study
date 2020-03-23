@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input id="inp" type="text">
+    <p id="p1"><p>
+    <ul id="ulName">
+    </ul>
+</body>
+<script type="text/javascript">
+    var inp = document.getElementById("inp");
+    var p1 = document.getElementById("p1");
+    // var list = [{name: "test1"}, {name: "test2"}, {name: "test3"}, {name: "test4"}];
+    // var ulName = document.getElementById("ulName");
+    // for (var i = 0; i < list.length; i++) {
+    //     var createLi = document.createElement("li");
+    //     createLi.innerHTML = list[i].name;
+    //     ulName.appendChild(createLi);
+    // }
+
+    //通过dom实现
+    // inp.oninput = function () {
+    //     // console.log(inp.value);
+    //     p1.innerHTML = inp.value;
+    // }
+
+    var obj = {};
+    // obj.age = 18;
+    // obj.remark = function () {
+    //
+    // }
+    var returnVal = "";
+    //第三个参数   数据描述   存取器的描述
+    Object.defineProperty(obj,"age",{
+        get:function () {
+            return returnVal;
+        },
+        set:function (newValue) {
+            returnVal = newValue;
+        }
+    })//怎么利用defineProperty去劫持更新的呢？
+    // console.log(obj.age);
+    console.log(returnVal);
+    obj.age = 18;
+    // console.log(obj.age);
+    console.log(returnVal);
+</script>
+</html>

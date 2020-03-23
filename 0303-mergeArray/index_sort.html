@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>算法篇</title>
+</head>
+<body>
+    <script>
+        //2W 
+        //员工 --> 工号 
+        //年龄 --> 18 --65 -->重复的数据 非常的多 ？
+        // 判断 合并
+        function merge(left, right){
+            var result = [];// 3 5 6
+            while(left.length > 0 && right.length > 0){
+                if(left[0] < right[0]){
+                    result.push(left.shift());
+                }else{
+                    result.push(right.shift());
+                } 
+            }
+            return result.concat(left).concat(right);
+            //console.log(result);
+        }
+        //拆分
+        function mergeSort(arr){
+            if(arr.length == 1){
+                return arr;
+            }
+            var mid = Math.floor(arr.length / 2);
+            var left_arr = arr.slice(0, mid);// 【2】
+            var right_arr = arr.slice(mid);// [5,3]
+            return merge(mergeSort(left_arr), mergeSort(right_arr));
+        }
+
+        var arr =[6,5,3,5,8,9,4,12,15,11,19];
+        console.log(mergeSort(arr));
+
+
+
+
+    </script>
+</body>
+</html>

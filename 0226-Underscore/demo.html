@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lodash.js"></script>
+		<script>
+// 		 console.log(_.uniq([1,2,3,4,5,2,3,4,5,"a","A"], function(val){
+// 			return typeof val === "string" ? val.toLocaleLowerCase() : val;
+// 		 }));
+	     
+		 // $().xxxx    _().xxxx
+		 //_.uniq([1,2,3,4,5,2,3,4,5,"a","A"]).reduce();   //数据的累加
+		 
+		 //数组数据.reduce()   Arrary.prototype.reduce    
+		 //函数编程的思想  流式思想       最终处理的方案
+		 //面向对象的编程思想
+         
+		 console.log(_.chain([1,2,3,4,5,2,3,4,5,"a","A"]).uniq().value()); 
+		</script>
+	</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>排序算法</title>
+    <script src="Queue.js"></script>
+    
+</head>
+<body>
+<script type="text/javascript">
+    52  *  51
+
+    // 初始化15个二位整数
+    var nums = [];
+    for(var i = 0; i < 15; i++){
+        nums[i] = Math.floor(Math.random() * 90 + 10);
+    }
+    
+    //准备好桶子
+    var queues = [];
+    for(var i = 0; i < 10; i++){
+        queues[i] = new Queue();
+    }
+
+    /*基数排序*/
+    function radixSort(nums, queues, n, flag){
+        for(var i = 0; i < n; i++){
+            // 11 12 21 23
+            if(flag == 1){//表示各位丢到桶子
+                queues[nums[i]%10].enqueue(nums[i]);
+            }else if(flag == 10){//
+                queues[Math.floor(nums[i]/10)].enqueue(nums[i]);
+            }
+
+        }
+        //console.log(queues);
+    
+    }
+    //对桶子 里面的数据重新把 nums赋值
+    function collect(queues, nums){
+        var i = 0;
+        for(var d = 0 ; d < 10; d++){
+            while(!queues[d].empty()){
+                nums[i++] = queues[d].dequeue();
+            }
+        }
+
+    }
+    //进行个位的排序
+    radixSort(nums,queues,15,1);
+    collect(queues, nums);
+    console.log("个位排序之后：");
+    console.log(nums);
+    radixSort(nums,queues,15,10);
+    collect(queues, nums);
+    console.log("十位排序之后：");
+    console.log(nums);
+
+    //radixSort(nums,queues,15,10);
+
+
+
+
+</script>
+</body>
+</html>

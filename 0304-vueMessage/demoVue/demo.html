@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue双向数据绑定实现原理</title>
+</head>
+<script type="text/javascript" src="MyVue.js"></script>
+<body>
+<div id="app">
+    <!--{{name}}-->
+    <input type="text" id="txt"><br/>
+    输出：<span id="txtspan"></span>
+</div>
+</body>
+<script type="text/javascript">
+    var txt = document.querySelector("#txt");
+    var txtSpan = document.getElementById("txtspan");
+    var v = new MyVue({
+        el: "#app",
+        data: {
+            count: 0,
+            name: "小唐",
+            age: 18,
+        }
+    });
+    txt.addEventListener("keyup",function (e) {
+        v._data.name = e.target.value;
+    })
+    //接收set的值
+    function callBack(val) {
+        txtSpan.innerHTML = val;
+    }
+    // v._data.name = "Ariel";
+</script>
+</html>

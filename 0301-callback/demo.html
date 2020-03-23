@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="stateAdministration.js"></script>
+		<script>
+		/*	var callbackList = _.callbackList("once memory");
+			callbackList.add(function() { //处理函数
+				console.log("啊哈哈")
+			});
+			callbackList.fire();
+			callbackList.add(function() { //处理函数
+				console.log("视频找灿灿老师")
+			});
+			callbackList.fire(); //执行一次
+
+*/
+
+			var wait = function() {
+				var state = _.state();
+				var test = function(){
+					console.log("视频找灿灿老师");
+					state.reject();
+				}
+				setTimeout(test,3000);
+			   return state;
+			}
+			
+			_.when(wait())
+			.done(function(){
+				console.log("成功")
+			})
+			.fail(function(){
+				console.log("失败")
+			})
+			.fail(function(){
+				console.log("又失败")
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!-- Import X-Tag -->
+<script src="./x-tag-core/src/core.js"></script>
+<template>
+    <style>
+        .color{
+            color: red;
+        }
+    </style>
+    <p>My favorite colour is: <strong class="color">Red</strong></p>
+</template>
+<script>
+    (function(window, document, undefined) {
+     var thatDoc = document;
+     var thisDoc = document.currentScript.ownerDocument;
+     var template = thisDoc.querySelector('template').content;
+     xtag.register('netease-color', {
+         lifecycle: {
+             created: function() {
+                this.setColor();
+             },
+             attributeChanged: function(a , o , n) {
+                
+             }
+         },
+         methods: {
+             setColor: function() {
+                console.log("设置颜色");
+             }
+         }
+     });
+ })(window, document);
+</script>
+

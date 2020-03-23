@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MVVM</title>
+    <script>
+        //第一步 实现基本架构
+        //第二步 把模型的数据 显示到视图
+        //第三步 更新视图同步到模型  --再更新视图
+        //发布者 
+        class Vue{
+            constructor(options){
+                this.options = options;
+                this.$data = options.data;//获取数据
+                this.$el = document.querySelector(options.el);//获取对象
+                this._directives = {};//存放订阅者
+                //{myText : [订阅者1，订阅者2]，myBox: [订阅者1]}
+
+                this.Observer(this.$data);
+                this.Compile(this.$el);
+            }
+            //劫持数据
+            Observer(data){
+                // 更新视图 是全部更新 还是局部？
+                for(let key in data){
+                    this._directives[key] = [];//空类数组对象
+
+                    let Val = data[key];//当前的值
+                    let _this = this._directives[key];//得到 myText的数组
+                    Object.defineProperty(this.$data, key, {
+                        get: function(){
+                            return  Val;
+                        },
+                        set: function(newVal){
+                            if(newVal !== Val){
+                                Val = newVal;
+                                //{myText : [订阅者1，订阅者2]，myBox: [订阅者1]}
+                                _this.forEach(watch => {//遍历订阅者的实例
+                                    watch.update();//更新视图
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+            //解析指令 
+            Compile(el){
+                let nodes = el.children;//获取APP下面的子元素
+                for(let i = 0; i < nodes.length; i++){
+                    let node = nodes[i]; //当前元素
+                    if(node.children.length){//如果当前元素含有子元素 就自我调用自己
+                       this.Compile(node); 
+                    }
+                    if(node.hasAttribute("v-text")){//查找v-text
+                        //获取属性里面的值 对号进入相对应的订阅者数组
+                        let attrVal = node.getAttribute("v-text");
+                        this._directives[attrVal].push(new Watcher(node, attrVal, this, "innerHTML"));
+                    }
+                    if(node.hasAttribute("v-model")){
+                          //获取属性里面的值 对号进入相对应的订阅者数组
+                        let attrVal = node.getAttribute("v-model");
+                        this._directives[attrVal].push(new Watcher(node, attrVal, this, "value"));
+                        let _this = this;
+                        node.addEventListener("input", (function(){
+                            return function(){
+                                 //console.log(node.value);
+                                 //更新视图同步到模型
+                                 _this.$data[attrVal] = node.value;
+                                 
+                                // console.log( _this.$data[attrVal]);
+                            }
+                        })());
+                    }                   
+                }
+            }
+        }
+        //订阅者
+        class Watcher{
+            constructor(el, vm, mySelf, attr){
+                this.el = el;
+                this.vm = vm;
+                this.mySelf = mySelf;
+                this.attr = attr;
+                this.update();//初始化数据
+
+            }
+            update(){
+                this.el[this.attr] = this.mySelf.$data[this.vm];
+                // div对象[innerHTML] = vue对象.data["myText"]
+                // input对象[value] = vue对象.data["myText"]
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div id="app">
+        <h1>数据响应式</h1>
+        <div>
+            <div v-text="myText"></div>
+            <div v-text="myBox"></div>
+            <input type="text" v-model="myText">
+        </div>
+
+    </div>
+    <script>
+            const app = new Vue({
+                el: "#app",
+                data: {
+                    myText: "大吉大利！今晚吃鸡！",
+                    myBox: "局部变化！"
+                }
+
+            });
+
+    </script>
+</body>
+</html>

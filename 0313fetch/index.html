@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>如何使用fetch请求数据</title>
+</head>
+<body>
+    <button id="btn1">读取本地文件</button>
+    <button id="btn2">读取本地JSON文件</button>
+    <button id="btn3">网络请求数据</button>
+    <div id="app"></div>
+</body>
+<script type="text/javascript" src="FetchGet.js"></script>
+<script type="text/javascript">
+    var btn1 = document.getElementById("btn1");
+    var btn2 = document.getElementById("btn2");
+    var btn3 = document.getElementById("btn3");
+    var app = document.getElementById("app");
+    btn1.addEventListener("click",function (e) {
+       FetchGet("test.txt","",function (res) {
+           console.log("读取本地文件"+res);
+           app.innerHTML = res;
+       });
+
+    })
+    btn2.addEventListener("click",function (e) {
+        FetchGet("demo.json","",function (res) {
+            console.log("读取本地JSON文件"+res);
+            app.innerHTML = res;
+        });
+    })
+    btn3.addEventListener("click",function (e) {
+        // http://wthrcdn.etouch.cn/weather_mini?citykey=101210101
+        //?citykey=101210101&citykey=101210101
+        FetchGet("http://wthrcdn.etouch.cn/weather_mini",{param:{citykey:101210101}},function (res) {
+            console.log("网络请求数据"+res);
+            app.innerHTML = res;
+        });
+
+    })
+</script>
+</html>

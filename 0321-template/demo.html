@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="template.js"></script>
+		<script>
+			var compiled = template("hello:<% alert(123) %>");
+			console.log(compiled());
+		</script>
+	</body>
+</html>
