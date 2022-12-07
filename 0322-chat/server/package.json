@@ -4,7 +4,7 @@
   "description": "\u0016",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.15.3",
+    "express": "^4.17.3",
     "socket.io": "^2.0.1",
     "mongodb": "^2.2.33",
     "request": "^2.83.0"
